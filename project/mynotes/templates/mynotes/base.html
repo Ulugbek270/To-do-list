@@ -1,0 +1,72 @@
+{% load static %}
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'mynotes/css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/d1069cea8d.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Base</title>
+</head>
+<body>
+
+<header class="p-3 bg-dark text-white">
+    <div class="container ">
+
+
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <!-- Logo and Branding -->
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                    <use xlink:href="#bootstrap"></use>
+                </svg>
+            </a>
+
+            <!-- Navigation Links -->
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="{% url 'index' %}" class="nav-link px-2 text-secondary">Home</a></li>
+                <li><a href="{% url 'tasks' %}" class="nav-link px-2 text-white">To-do list</a></li>
+                <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+                <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+                <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+            </ul>
+
+            <!-- Search Form -->
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" style="margin-left: 300px">
+                <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+            </form>
+
+            <!-- Login and Sign-up Buttons -->
+            <div class="text-end">
+                <a href="" class="btn btn-outline-light me-2">Login</a>
+                <a href="" class="btn btn-warning">Sign-up</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+{% for message in messages %}
+<div class="alert {{ message.tags }}" role="alert">
+    {{ message }}
+</div>
+{% endfor %}
+
+
+<div class="container">
+    {% block main %}
+
+    {% endblock %}
+</div>
+
+
+</body>
+</html>

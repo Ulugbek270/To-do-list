@@ -1,0 +1,163 @@
+{% extends 'mynotes/base.html' %}
+
+
+{% block main %}
+<style>
+    .pink {
+        background-color: #DADADA;
+        border: 2px solid;
+        border-radius: 25px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .myli_good:hover {
+        background-color: #ECECEC;
+    }
+
+    .myli_bad:hover {
+        background-color: #ECECEC;
+    }
+
+
+    .task-item label {
+        cursor: pointer;
+        user-select: none;
+    }
+
+    /*.task-item input[type="checkbox"] {*/
+    /*    display: none;*/
+    /*}*/
+
+    /*.completed-task label {*/
+    /*    text-decoration: line-through;*/
+    /*    color: #6c757d;*/
+    /*}*/
+
+    /*.myli_good input[type="checkbox"]:checked + label {*/
+    /*    text-decoration: line-through;*/
+    /*    color: #6c757d;*/
+    /*}*/
+
+    /*.myli_bad{*/
+    /*    text-decoration: line-through;*/
+    /*    color: #6c757d;*/
+    /*}*/
+
+
+</style>
+
+<div class="pink">
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center">
+            <div class="col col-xl-10">
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body p-5">
+                        <h4 class="mb-3">Todo List</h4>
+                        <h5 class="mb-3 text-secondary">Number of unaccomplished tasks: {{numb_active_tasks}}</h5>
+
+                        <form action="{% url 'add_task' %}" method="post">
+                            {% csrf_token %}
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="title" placeholder="Add a new task"
+                                       required>
+                                <input type="text" class="form-control" name="description"
+                                       placeholder="Description(optional)"
+                                >
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">Add</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <ul class="list-group mb-0 mt-4">
+                            {% if numb_active_tasks > 0 %}
+
+                            {% for active_task in active_tasks %}
+                            <li class="myli_good font-weight-bold list-group-item  d-flex justify-content-between align-items-center rounded-0 mb-2 task-item">
+                                {% csrf_token %}
+
+
+                                <div class="gblock1">
+                                    <a href="{% url 'toggle_task_complete' active_task.pk %}" class="edit_icon ml-2">
+                                        <i class="fa-regular fa-square-check text-success"></i> </a>
+                                    <a href="{% url 'TaskEdit' active_task.pk  %}" class="text-dark edit_icon ml-2">
+                                        <label>{{ active_task.title }}</label>
+                                    </a>
+                                </div>
+
+                                <div class="gblock2">
+
+                                    <a href="{% url 'TaskDelete' active_task.pk %}" class="">
+                                        <i class="fas fa-times text-primary"></i>
+                                    </a>
+                                </div>
+                            </li>
+                            {% endfor %}
+
+                            {% else %}
+                            <h5 class="text-success">There is no active tasks for today...</h5>
+                            {% endif %}
+                        </ul>
+
+
+                        <div id="menu">
+                            <div class="panel list-group mt-4">
+                                <a href="#" class="list-group-item text-danger" data-toggle="collapse" data-target="#sl"
+                                   data-parent="#menu">Completed Tasks<span
+                                        class="glyphicon glyphicon-tag pull-right"></span></a>
+                                <div id="sl" class="sublinks collapse">
+
+
+
+                            {% for inactive_task in inactive_tasks %}
+                            <li class="myli_bad list-group-item small d-flex justify-content-between align-items-center rounded-0 mt-2 mb-2 task-item">
+                                {% csrf_token %}
+                                <div class="bblock1">
+
+                                    <a href="{% url 'untoggle_task_complete' inactive_task.pk %}" class="edit_icon  ml-2">
+                                        <i class="fa-regular fa-square-check text-secondary"></i> </a>
+                                    </a>
+
+                                    <a href="{% url 'TaskEdit' inactive_task.pk  %}" class="text-dark edit_icon ml-2">
+
+                                        <label class="completed-task">{{ inactive_task.title }}</label>
+                                    </a>
+                                </div>
+                                <div class="bblock2">
+
+                                    <a href="{% url 'TaskDelete' inactive_task.pk %}">
+                                        <!-- DELETE -->
+                                        <i class="fas fa-times text-secondary"></i>
+                                    </a>
+                                </div>
+                            </li>
+                            {% endfor %}
+
+
+
+
+<!--                                    </p>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+
+
+
+
+

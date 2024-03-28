@@ -1,0 +1,41 @@
+                        <ul class="list-group mb-0 mt-4">
+                            {% if numb_inactive_tasks > 0 %}
+
+
+
+
+                            {% for inactive_task in inactive_tasks %}
+                            <li class="myli_bad list-group-item d-flex justify-content-between align-items-center rounded-0 mb-2 task-item">
+
+                                {% csrf_token %}
+                                <div class="bblock1">
+
+                                    <a href="{% url 'untoggle_task_complete' inactive_task.pk %}" class="edit_icon  ml-2">
+                                        <i class="fa-regular fa-square-check text-secondary"></i> </a>
+                                    </a>
+
+                                    <a href="{% url 'TaskEdit' inactive_task.pk  %}" class="text-dark edit_icon ml-2">
+
+                                        <label class="completed-task">{{ inactive_task.title }}</label>
+                                    </a>
+                                </div>
+                                <div class="bblock2">
+
+                                    <a href="{% url 'TaskDelete' inactive_task.pk %}">
+                                        <!-- DELETE -->
+                                        <i class="fas fa-times text-secondary"></i>
+                                    </a>
+                                </div>
+
+                            </li>
+                            {% endfor %}
+
+
+
+
+                            {% else %}
+                            <h5 class="text-secondary">There are no completed tasks...</h5>
+
+
+                            {% endif %}
+                        </ul>
